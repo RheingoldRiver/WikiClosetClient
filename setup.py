@@ -3,7 +3,7 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 setuptools.setup(
     name="WikiClosetClient",

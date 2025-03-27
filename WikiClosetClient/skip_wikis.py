@@ -1,4 +1,5 @@
 WIKIS_TO_SKIP = [
+    "acecombat",
     "ark",
     "palia",
     "undertaleyellow",
