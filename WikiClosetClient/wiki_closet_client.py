@@ -1,9 +1,10 @@
-import json
 from typing import Optional, Union, List, Iterable
 
 from mwcleric import WikiClient, AuthCredentials, WikiggClient
-from requests.exceptions import HTTPError
 from mwclient.errors import APIError
+from requests.exceptions import HTTPError
+
+from WikiClosetClient.skip_wikis import WIKIS_TO_SKIP
 
 
 class WikiClosetClient:
@@ -16,12 +17,7 @@ class WikiClosetClient:
             self.confluence = client
             return
         self.confluence = WikiggClient('confluence', credentials=credentials)
-        with open('skip_wikis.json', 'r') as f:
-            data = json.load(f)
-            if wikis := data['skip']:
-                self.wikis_to_skip = wikis
-            else:
-                self.wikis_to_skip = []
+        self.wikis_to_skip = WIKIS_TO_SKIP
 
     def all_wikis(self, wcstatus: str = 'all', lang: Optional[str] = None,
                   startat: Optional[str] = None,
@@ -35,7 +31,7 @@ class WikiClosetClient:
             extensions = [extensions]
 
         # if you provide your own instance of confluence in the constructor then
-        # it's possible that credentials will be None here and you won't log into the individual wikis
+        # it's possible that credentials will be None here & you won't log into the individual wikis
         # that should be fine
         passed_startat = startat is None
         credentials = self.credentials if credentials is None else credentials
